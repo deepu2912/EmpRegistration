@@ -1,0 +1,350 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<style>
+    body {
+        background: url('https://static-communitytable.parade.com/wp-content/uploads/2014/03/rethink-target-heart-rate-number-ftr.jpg') fixed;
+        background-size: cover;
+    }
+
+    *[role="form"] {
+        max-width: 530px;
+        padding: 15px;
+        margin: 0 auto;
+        border-radius: 0.3em;
+        background-color: #f2f2f2;
+    }
+
+        *[role="form"] h2 {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 40px;
+            font-weight: 600;
+            color: #000000;
+            margin-top: 5%;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+</style>
+
+<div class="container">
+    <form class="form-horizontal" role="form">
+        <h4>Employee Information</h4>
+
+        <div class="form-group">
+            <label for="EmpID" class="col-sm-3 control-label"> ID</label>
+            <div class="col-sm-9">
+                <select id="EmpID" class="form-control">
+                    @Html.Raw(ViewBag.EmpIDData)
+
+                </select>
+            </div>
+            <div class="col-sm-3" style="float: right; text-align:right; right:92px;margin-top: 7px; ">
+                <button type="button" class="btn btn-primary btn-block" id="LoadEmpData">
+                    Load
+                </button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="name" class="col-sm-3 control-label"> Name</label>
+            <div class="col-sm-9">
+                <input type="text" id="name" placeholder="Name" class="form-control" autofocus>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="address" class="col-sm-3 control-label">Address* </label>
+            <div class="col-sm-9">
+                <input type="text" id="address" placeholder="Address" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="city" class="col-sm-3 control-label">City</label>
+            <div class="col-sm-9">
+                <input type="text" id="city" placeholder="City" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="dateofbirth" class="col-sm-3 control-label">Date of Birth</label>
+            <div class="col-sm-9">
+                <input type="date" id="dateofbirth" placeholder="Date of Birth" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Age" class="col-sm-3 control-label">Age</label>
+            <div class="col-sm-9">
+                <input type="text" id="Age" class="form-control" >
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber" class="col-sm-3 control-label">Phone number </label>
+            <div class="col-sm-9">
+                <input type="text" id="phoneNumber" placeholder="Phone number" class="form-control">
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Department" class="col-sm-3 control-label">Department </label>
+            <div class="col-sm-9">
+                <select id="Department" class="form-control">
+                    <option>Engineering</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Manager" class="col-sm-3 control-label">Manager </label>
+            <div class="col-sm-9">
+                <select id="Manager" class="form-control">
+                    <option>Mr. Abc</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="dateofjoining" class="col-sm-3 control-label">Date of Joining </label>
+            <div class="col-sm-9">
+                <input type="date" id="dateofjoining" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="dateofLeaving" class="col-sm-3 control-label">Date of Leaving </label>
+            <div class="col-sm-9">
+                <input type="date" id="dateofLeaving" class="form-control">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4">
+                <button type="button" id="SaveEmpData" class="btn btn-primary btn-block">Save</button>
+                <button type="button" id="UpdateEmpData" style="display:none;" class="btn btn-primary btn-block">Update</button>
+            </div>
+            <div class="col-lg-4"><button type="button" class="btn btn-default btn-block">Reset</button></div>
+
+        </div>
+    </form> <!-- /form -->
+</div> <!-- ./container -->
+
+<script>
+    $('#SaveEmpData').click(function (e) {
+        debugger;
+        var Name = $('#name').val();
+        var address = $('#address').val();
+        var city = $('#city').val();
+        var dateofbirth = $('#dateofbirth').val();
+        var Age = $('#Age').val();
+        var phoneNumber = $('#phoneNumber').val();
+        var Department = $('#Department').val();
+        var Manager = $('#Manager').val();
+        var dateofjoining = $('#dateofjoining').val();
+        var dateofLeaving = $('#dateofLeaving').val();
+        var Error = "Please enter the following detals \n";
+
+        if (Name.length == 0) {
+            Error = Error + "Please enter the name \n";
+        }
+        if (address.length == 0) {
+            Error = Error + "Please enter the address \n";
+        }
+        if (city.length == 0) {
+            Error = Error + "Please enter the city \n";
+        }
+        if (phoneNumber.length == 0) {
+            Error = Error + "Please enter the phoneNumber \n";
+        }
+        if (Department.length == 0) {
+            Error = Error + "Please select the Department \n";
+        }
+        if (Manager.length == 0) {
+            Error = Error + "Please select the Manager \n";
+        }
+
+        if (Error != "Please enter the following detals \n") {
+            alert(Error);
+        }
+        else {
+            var values = {
+                "name": Name, "address": address, "city": city, "dateofbirth": dateofbirth, "Age": Age, "phoneNumber": phoneNumber
+                , "Department": Department, "Manager": Manager, "dateofjoining": dateofjoining, "dateofLeaving": dateofLeaving
+            };
+            $.ajax({
+                type: "POST",
+                url: '/home/InsertEmployee',
+                data: JSON.stringify(values),
+                dataType: "json",
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    alert(data.msg);
+                    window.location.reload();
+                },
+                error: function () {
+                    alert("Error occured!!")
+                }
+            });
+        }
+    })
+
+    $('#dateofbirth').change(function (e) {
+        dob = new Date($('#dateofbirth').val());
+        var today = new Date();
+        var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
+        $('#Age').val(age);
+        $('#Age').attr('readonly', true);
+    })
+    $('#Age').change(function (e) {
+        var date = new Date(); 
+        date.setFullYear(date.getFullYear() - $('#Age').val());
+
+        var now = new Date(date);
+
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+        var today = now.getFullYear() + "-" + (month) + "-" + (day);
+
+
+        $("#dateofbirth").val(today);
+    })
+
+
+   
+
+    $('#LoadEmpData').click(function (e) {
+        var EmpID = $('#EmpID').val() || 0;
+
+        if (EmpID == 0) {
+            alert('Please select Empployee ID');
+        }
+        else {
+            var values = {
+                "id": EmpID
+            };
+            $.ajax({
+                type: "POST",
+                url: '/home/GetEmpDatabyID',
+                data: JSON.stringify(values),
+                dataType: "json",
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    debugger;
+                    $('#name').val(data[0].Name);
+                    $('#address').val(data[0].Address);
+                    $('#city').val(data[0].City);
+
+                    var now = new Date(data[0].DateofBirth);
+
+                    var day = ("0" + now.getDate()).slice(-2);
+                    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+                    var today = now.getFullYear() + "-" + (month) + "-" + (day);
+ 
+
+                    $('#dateofbirth').val(today);
+                    $('#Age').val(data[0].Age);
+                    $('#phoneNumber').val(data[0].PhoneNumber);
+                    $('#Department').val(data[0].Department);
+                    $('#Manager').val(data[0].Manager);
+
+                    if (data[0].DateofJoining != "") {
+                        var DateofJoiningnow = new Date(data[0].DateofJoining);
+
+                        var DateofJoiningday = ("0" + DateofJoiningnow.getDate()).slice(-2);
+                        var DateofJoiningmonth = ("0" + (DateofJoiningnow.getMonth() + 1)).slice(-2);
+
+                        var DateofJoiningnowtoday = DateofJoiningnow.getFullYear() + "-" + (DateofJoiningmonth) + "-" + (DateofJoiningday);
+
+
+                        $('#dateofjoining').val(DateofJoiningnowtoday);
+                    }
+
+                    if (data[0].DateofLeaving != "") {
+                        var DateofLeavingnow = new Date(data[0].DateofLeaving);
+
+                        var DateofLeavingday = ("0" + DateofLeavingnow.getDate()).slice(-2);
+                        var DateofLeavingmonth = ("0" + (DateofLeavingnow.getMonth() + 1)).slice(-2);
+
+                        var DateofLeavingtoday = DateofLeavingnow.getFullYear() + "-" + (DateofLeavingmonth) + "-" + (DateofLeavingday);
+
+
+                        $('#dateofLeaving').val(DateofLeavingtoday);
+                    }
+                 
+                    $('#SaveEmpData').hide();
+                    $('#UpdateEmpData').show();
+                    $('#UpdateEmpData').attr('empid', data[0].EmpID);
+
+                },
+                error: function () {
+                    alert("Error occured!!")
+                }
+            });
+        }
+    })
+
+    $('#UpdateEmpData').click(function (e) {
+        debugger;
+        var Name = $('#name').val();
+        var address = $('#address').val();
+        var city = $('#city').val();
+        var dateofbirth = $('#dateofbirth').val();
+        var Age = $('#Age').val();
+        var phoneNumber = $('#phoneNumber').val();
+        var Department = $('#Department').val();
+        var Manager = $('#Manager').val();
+        var dateofjoining = $('#dateofjoining').val();
+        var dateofLeaving = $('#dateofLeaving').val();
+        var EmpID = $('#UpdateEmpData').attr('empid');
+     
+        var Error = "Please enter the following detals \n";
+
+        if (Name.length == 0) {
+            Error = Error + "Please enter the name \n";
+        }
+        if (address.length == 0) {
+            Error = Error + "Please enter the address \n";
+        }
+        if (city.length == 0) {
+            Error = Error + "Please enter the city \n";
+        }
+        if (phoneNumber.length == 0) {
+            Error = Error + "Please enter the phoneNumber \n";
+        }
+        if (Department.length == 0) {
+            Error = Error + "Please select the Department \n";
+        }
+        if (Manager.length == 0) {
+            Error = Error + "Please select the Manager \n";
+        }
+
+        if (Error != "Please enter the following detals \n") {
+            alert(Error);
+        }
+        else {
+            var values = {
+                "id": EmpID, "name": Name, "address": address, "city": city, "dateofbirth": dateofbirth, "Age": Age, "phoneNumber": phoneNumber
+                , "Department": Department, "Manager": Manager, "dateofjoining": dateofjoining, "dateofLeaving": dateofLeaving
+            };
+             
+
+            //var values = {
+            //    "id": EmpID 
+            //};
+            $.ajax({
+                type: "POST",
+                url: '/home/UpdateEmployee',
+                data: JSON.stringify(values),
+                dataType: "json",
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    alert(data.msg);
+                    window.location.reload();
+                },
+                error: function () {
+                    alert("Error occured!!")
+                }
+            });
+        }
+    })
+
+</script>
+ 
